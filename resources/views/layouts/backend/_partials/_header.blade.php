@@ -3,6 +3,7 @@
         <div class="logo-src"></div>
         <div class="header__pane ml-auto">
             <div>
+                <!-- add is-active inside class for closed-sidebar -->
                 <button type="button" class="hamburger close-sidebar-btn hamburger--elastic"
                     data-class="closed-sidebar">
                     <span class="hamburger-box">

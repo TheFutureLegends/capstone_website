@@ -22,7 +22,8 @@
     * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
     -->
     <link href="{{asset('css/main.css')}}" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/6112431a05.js" crossorigin="anonymous"></script>
+    {{-- <script src="https://kit.fontawesome.com/6112431a05.js" crossorigin="anonymous"></script> --}}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
 </head>
 
 <body>
@@ -37,47 +38,15 @@
                 <div class="app-main__inner">
                     @yield('content')
                 </div>
-                <div class="app-wrapper-footer">
-                    <div class="app-footer">
-                        <div class="app-footer__inner">
-                            <div class="app-footer-left">
-                                <ul class="nav">
-                                    <li class="nav-item">
-                                        <a href="javascript:void(0);" class="nav-link">
-                                            Footer Link 1
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="javascript:void(0);" class="nav-link">
-                                            Footer Link 2
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="app-footer-right">
-                                <ul class="nav">
-                                    <li class="nav-item">
-                                        <a href="javascript:void(0);" class="nav-link">
-                                            Footer Link 3
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="javascript:void(0);" class="nav-link">
-                                            <div class="badge badge-success mr-1 ml-0">
-                                                <small>NEW</small>
-                                            </div>
-                                            Footer Link 4
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @include('layouts.backend._partials._footer')
             </div>
             <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
         </div>
     </div>
-    <script type="text/javascript" src="{{asset('js/main.js')}}"></script></body>
-
+    <!-- TinyMCE Plugin -->
+    <script src="https://cdn.tiny.cloud/1/slyingz9myqi7fv31jkg1mx9m2jrq1gt4tdrw9z0gqzbfgy0/tinymce/5/tinymce.min.js"
+        referrerpolicy="origin"></script>
+    <script type="text/javascript" src="{{asset('js/main.js')}}"></script>
+</body>
+@yield('javascript')
 </html>
