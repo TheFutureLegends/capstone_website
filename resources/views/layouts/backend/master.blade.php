@@ -59,6 +59,8 @@
 
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
     <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 </body>
 @yield('javascript')

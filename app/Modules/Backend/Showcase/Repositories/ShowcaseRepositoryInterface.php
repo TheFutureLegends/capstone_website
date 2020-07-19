@@ -4,7 +4,7 @@ namespace App\Modules\Backend\Showcase\Repositories;
 
 interface ShowcaseRepositoryInterface
 {
-    public function get(array $fields);
+    public function getPersonalShowcase(array $fields);
 
     public function findById($id);
 
@@ -12,7 +12,7 @@ interface ShowcaseRepositoryInterface
 
     public function create(array $request);
 
-    public function update($id, array $request);
+    public function update(string $slug, array $request);
 
     public function destroy($slug);
 }

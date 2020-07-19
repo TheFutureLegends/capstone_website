@@ -203,6 +203,44 @@ if (utility.isExists('#showcase-datatables')) {
     },
     fnDrawCallback: function fnDrawCallback() {}
   });
+  $(document).on('click', '.showcase-remove', function (e) {
+    var _this = this;
+
+    e.preventDefault();
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then(function (result) {
+      if (result.value) {
+        $.ajax({
+          url: '/dashboard/showcase/delete/' + $(_this).data('slug'),
+          type: 'DELETE',
+          success: function success(data) {
+            var table_id = $(_this).parent().parent().parent().parent().attr('id');
+            $('#' + table_id).DataTable().ajax.reload();
+          },
+          error: function error(jqXHR, textStatus, errorThrown) {
+            utility.formatErrorMessage(jqXHR, errorThrown);
+          }
+        });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        // Cancel button is pressed
+        Swal.fire({
+          icon: 'info',
+          title: 'Your data is safe!',
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
+
+      ;
+    });
+  });
 }
 
 /***/ }),

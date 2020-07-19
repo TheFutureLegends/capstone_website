@@ -24,7 +24,7 @@ class ShowcaseController extends Controller
 
     public function dataTables()
     {
-        $showcases = $this->showcaseRepository->get(['title', 'slug', 'content', 'group_name']);
+        $showcases = $this->showcaseRepository->getPersonalShowcase(['title', 'slug', 'content', 'group_name']);
 
         return DataTables::of($showcases)
             ->addColumn('title', function ($showcase) {
@@ -65,5 +65,34 @@ class ShowcaseController extends Controller
         $this->showcaseRepository->create($array);
 
         return redirect()->route('showcase.index');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  string  $slug
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($slug)
+    {
+        $showcase = $this->showcaseRepository->findBySlug($slug);
+
+        return view('Showcase::form')->with([
+            'showcase' => $showcase
+        ]);
+    }
+
+    public function update($slug, Request $request)
+    {
+        $this->showcaseRepository->update($slug, $request->all());
+
+        return redirect()->route('showcase.index');
+    }
+
+    public function destroy($slug)
+    {
+        $this->showcaseRepository->destroy($slug);
+
+        return response()->json(['status' => 200, 'message' => "Delete Successfully!"]);
     }
 }

@@ -62,12 +62,6 @@
                         </li>
                     </ul>
                 </li>
-                <li>
-                    <a href="tables-regular.html">
-                        <i class="metismenu-icon pe-7s-display2"></i>
-                        Tables
-                    </a>
-                </li>
                 <li class="app-sidebar__heading">Blog</li>
                 <li>
                     <a href="#">
@@ -79,13 +73,13 @@
                         <li>
                             <a href="elements-buttons-standard.html">
                                 <i class="metismenu-icon"></i>
-                                List of showcases
+                                List of blogs
                             </a>
                         </li>
                         <li>
                             <a href="elements-dropdowns.html">
                                 <i class="metismenu-icon"></i>
-                                Create showcase
+                                Create blog
                             </a>
                         </li>
                     </ul>

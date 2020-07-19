@@ -121,7 +121,44 @@ if (utility.isExists('#showcase-datatables')) {
             "url": "/dashboard/dataTable/language"
         },
         fnDrawCallback: function () {
-            
+
         },
     });
+
+    $(document).on('click', '.showcase-remove', function (e) {
+        e.preventDefault();
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: '/dashboard/showcase/delete/' + $(this).data('slug'),
+                    type: 'DELETE',
+                    success: (data) => {
+                        var table_id = $(this).parent().parent().parent().parent().attr('id');
+
+                        $('#' + table_id).DataTable().ajax.reload();
+                    },
+                    error: (jqXHR, textStatus, errorThrown) => {
+                        utility.formatErrorMessage(jqXHR, errorThrown);
+                    }
+                });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                // Cancel button is pressed
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Your data is safe!',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            };
+        });
+    })
 }
