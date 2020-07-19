@@ -1,16 +1,15 @@
 <?php
 namespace App\Modules\Backend\Showcase\Controllers;
 
-// use App\Dashboard\Lecturer\Model\Lecturer;
 // use App\Exports\LecturerExport;
 // use Carbon\Carbon;
-// use Faker\Factory;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Modules\Backend\Showcase\Repositories\ShowcaseRepositoryInterface;
+use Illuminate\Http\Request;
 // use Illuminate\Support\Str;
 // use Maatwebsite\Excel\Facades\Excel;
-// use Yajra\DataTables\DataTables;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\DataTables;
 
 class ShowcaseController extends Controller
 {
@@ -23,6 +22,30 @@ class ShowcaseController extends Controller
         $this->showcaseRepository = $showcaseRepository;
     }
 
+    public function dataTables()
+    {
+        $showcases = $this->showcaseRepository->get(['title', 'slug', 'content', 'group_name']);
+
+        return DataTables::of($showcases)
+            ->addColumn('title', function ($showcase) {
+                return $showcase->title;
+            })
+            ->addcolumn('content', function ($showcase) {
+                $content = html_entity_decode(htmlspecialchars(strip_tags($showcase->content)));
+
+                return split_sentence(str_replace("&nbsp;", ' ', $content), 100, '...');
+            })
+            ->addColumn('group', function ($showcase) {
+                return $showcase->group_name;
+            })
+            ->addColumn('action', function ($showcase) {
+                return '<a href="' . url()->previous() . '/edit/' . $showcase->slug . '" class="btn btn-info showcase-edit" data-toggle="tooltip" title="Edit" data-placement="top">Edit</a>
+                    <a href="#" data-slug="' . $showcase->slug . '" class="btn btn-danger showcase-remove" data-toggle="tooltip" title="Remove" data-placement="top">Delete</a>';
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+
     public function index()
     {
         return view('Showcase::index');
@@ -32,14 +55,12 @@ class ShowcaseController extends Controller
     {
         return view('Showcase::form');
     }
-    
+
     public function store(Request $request)
     {
-        dd($request->all());
-
         $array = $request->all();
 
-        // $array['author'] = Auth::id();
+        $array['author'] = Auth::id();
 
         $this->showcaseRepository->create($array);
 

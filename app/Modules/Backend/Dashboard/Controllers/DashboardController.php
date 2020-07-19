@@ -15,50 +15,40 @@ class DashboardController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware(['auth', 'permission:view-lecturer|create-lecturer|update-lecturer|delete-lecturer']);
+        $this->middleware(['auth', 'permission:dashboard.access']);
     }
 
-    // function list() {
-    //     $lecturer = Lecturer::query()->exclude(['created_at'])->get();
+    public function dataTable_language()
+    {
+        $array = array(
+            'search' => "_INPUT_",
+            // 'sSearch'=> "Suchen",
+            'sSearchPlaceholder' => __('dataTables.sSearchPlaceholder'),
+            'sInfoThousands' => ".",
+            'sLengthMenu' => __('dataTables.sLengthMenu'),
+            'sEmptyTable' => __('dataTables.sEmptyTable'),
+            'sProcessing' => __('dataTables.sProcessing'),
+            'sLoadingRecords' => __('dataTables.sLoadingRecords'),
+            'sZeroRecords' => __('dataTables.sZeroRecords'),
+            'sInfo' => __('dataTables.sInfo'),
+            'sInfoFiltered' => __('dataTables.sInfoFiltered'),
+            'sInfoEmpty' => __('dataTables.sInfoEmpty'),
+            'oPaginate' => [
+                'sFirst' => __('dataTables.sFirst'),
+                'sPrevious' => __('dataTables.sPrevious'),
+                'sNext' => __('dataTables.sNext'),
+                'sLast' => __('dataTables.sLast'),
+            ],
+        );
 
-    //     return DataTables::of($lecturer)
-    //         ->addColumn('first_name', function ($lecturer) {
-    //             return $lecturer->first_name;
-    //         })
-    //         ->addColumn('last_name', function ($lecturer) {
-    //             return $lecturer->last_name;
-    //         })
-    //         ->addColumn('gender', function ($lecturer) {
-    //             switch ($lecturer->gender) {
-    //                 case 'M':
-    //                     return '<span class="badge badge-success">Male</span>';
-    //                     break;
-    //                 case 'F':
-    //                     return '<span class="badge badge-info">Female</span>';
-    //                     break;
+        return response()->json($array);
 
-    //                 default:
-    //                     return '<span class="badge badge-danger">Wrong type!</span>';
-    //                     break;
-    //             }
-    //         })
-    //         ->addColumn('age', function ($lecturer) {
-    //             return $lecturer->age;
-    //         })
-    //         ->addColumn('action', function ($lecturer) {
-    //             $random = Str::random(60);
-    //             return '<div class="lecturerParent">
-    //                         <input class="id" id="' . $random . '" name="lecturer" value="' . $lecturer->id . '" type="hidden" style="display:none;" readonly>
-    //                         <a href="?queue=' . $random . '" class="btn btn-link btn-warning btn-just-icon lecturerEdit"><i class="material-icons">edit</i></a>
-    //                         <a href="?queue=' . $random . '" class="btn btn-link btn-danger btn-just-icon lecturerRemove"><i class="material-icons">remove_circle</i></a>
-    //                     </div>';
-    //         })
-    //         ->editColumn('updated_at', function ($groups) {
-    //             return Carbon::parse($groups->updated_at)->diffForHumans();
-    //         })
-    //         ->rawColumns(['gender', 'action'])
-    //         ->make(true);
-    // }
+        // sInfoPostFix: "",
+        // oAria: {
+        //     sSortAscending: ": aktivieren, um Spalte aufsteigend zu sortieren",
+        //     sSortDescending: ": aktivieren, um Spalte absteigend zu sortieren"
+        // }
+    }
 
     public function index()
     {

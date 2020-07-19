@@ -22,14 +22,17 @@
             @csrf
             <div class="form-row">
                 <div class="col-md-6">
-                    <div class="position-relative form-group"><label for="exampleEmail11" class="">Email</label><input
-                            name="email" id="exampleEmail11" placeholder="with a placeholder" type="email"
-                            class="form-control"></div>
+                    <div class="position-relative form-group">
+                        <label for="title" class="">Title</label>
+                        <input name="title" id="title" placeholder="Example title" type="text"
+                            class="form-control">
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <div class="position-relative form-group">
                         <label for="group_name" class="">Group name</label>
-                        <input name="group_name" id="group_name" placeholder="The Future Legend" type="text" class="form-control"></div>
+                        <input name="group_name" id="group_name" placeholder="The Future Legend" type="text"
+                            class="form-control"></div>
                 </div>
             </div>
             <div class="position-relative form-group">
@@ -55,12 +58,12 @@
                 <textarea name="content" id="content" cols="100" rows="10"></textarea>
             </div>
 
-            <button type="submit" class="mt-2 btn btn-primary">Sign in</button>
+            <button type="submit" class="mt-2 btn btn-success">Create</button>
         </form>
     </div>
 </div>
 
-<br/>
+<br />
 @endsection
 
 @section('javascript')

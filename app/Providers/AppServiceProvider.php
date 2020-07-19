@@ -3,6 +3,10 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Schema;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role; // v8
+use Webpatser\Uuid\Uuid;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +27,28 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        /* Begin : MySQL Adjustment*/
+        Schema::defaultStringLength(191);
+        /* End : MySQL Adjustment*/
+
+        /* Begin Spatie: UUID Adjustment */
+        Permission::retrieved(function (Permission $permission) {
+            $permission->incrementing = false;
+        });
+
+        Permission::creating(function (Permission $permission) {
+            $permission->incrementing = false;
+            $permission->id = Uuid::generate(4)->string;
+        });
+
+        Role::retrieved(function (Role $role) {
+            $role->incrementing = false;
+        });
+
+        Role::creating(function (Role $role) {
+            $role->incrementing = false;
+            $role->id = Uuid::generate(4)->string;
+        });
+        /* End Spatie: UUID Adjustment */
     }
 }

@@ -4,6 +4,8 @@ namespace App\Modules\Backend\Showcase\Repositories;
 
 interface ShowcaseRepositoryInterface
 {
+    public function get(array $fields);
+
     public function findById($id);
 
     public function findBySlug($slug);

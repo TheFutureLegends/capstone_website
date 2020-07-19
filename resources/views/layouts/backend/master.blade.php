@@ -11,6 +11,8 @@
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
     <meta name="description" content="This is an example dashboard created using build-in elements and components.">
     <meta name="msapplication-tap-highlight" content="no">
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!--
     =========================================================
     * ArchitectUI HTML Theme Dashboard - v1.0.0
@@ -22,8 +24,13 @@
     * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
     -->
     <link href="{{asset('css/main.css')}}" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
     {{-- <script src="https://kit.fontawesome.com/6112431a05.js" crossorigin="anonymous"></script> --}}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
 </head>
 
 <body>
@@ -43,10 +50,17 @@
             <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <!-- TinyMCE Plugin -->
     <script src="https://cdn.tiny.cloud/1/slyingz9myqi7fv31jkg1mx9m2jrq1gt4tdrw9z0gqzbfgy0/tinymce/5/tinymce.min.js"
         referrerpolicy="origin"></script>
     <script type="text/javascript" src="{{asset('js/main.js')}}"></script>
+
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 </body>
 @yield('javascript')
+
 </html>

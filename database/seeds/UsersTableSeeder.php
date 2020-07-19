@@ -1,6 +1,9 @@
 <?php
 
+use App\User;
+use Faker\Factory;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class UsersTableSeeder extends Seeder
 {
@@ -11,21 +14,16 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert(
-            [
-                [
-                    'id' => \Webpatser\Uuid\Uuid::generate(4),
-                    'name' => 'Super Admin',
-                    'email' => 'admin@gmail.com',
-                    'password' => '$2y$10$3B4Xw.mY9DtpkTOsczTjyeWJM42Tr8N7gVIgEHfT9pxJjS5gn/MAC', // 123456
-                    'verifyToken' => null,
-                    'status' => 1,
+        $faker = Factory::create();
 
-                    'remember_token' => Str::random(60),
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]
-            ]
-        );
+        $admin = User::create([
+            'name' => 'Super admin',
+            'email' => 'super-admin@capstone.app',
+            'password' => Hash::make('password'),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $admin->assignRole('super-admin');
     }
 }

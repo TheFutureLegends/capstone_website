@@ -3,7 +3,6 @@
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
-use Webpatser\Uuid\Uuid;
 
 class RolesAndPermissionsTableSeeder extends Seeder
 {
@@ -16,35 +15,59 @@ class RolesAndPermissionsTableSeeder extends Seeder
     {
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        Permission::create(['name' => 'view-lecturer']);
-        Permission::create(['name' => 'create-lecturer']);
-        Permission::create(['name' => 'update-lecturer']);
-        Permission::create(['name' => 'delete-lecturer']);
+        Permission::create(['name' => 'showcase.view']);
+        Permission::create(['name' => 'showcase.create']);
+        Permission::create(['name' => 'showcase.update']);
+        Permission::create(['name' => 'showcase.delete']);
 
-        Permission::create(['name' => 'view-user']);
-        Permission::create(['name' => 'create-user']);
-        Permission::create(['name' => 'update-user']);
-        Permission::create(['name' => 'delete-user']);
+        Permission::create(['name' => 'blog.view']);
+        Permission::create(['name' => 'blog.create']);
+        Permission::create(['name' => 'blog.update']);
+        Permission::create(['name' => 'blog.delete']);
 
-        Permission::create(['name' => 'view-big-query']);
-        Permission::create(['name' => 'create-big-query']);
-        Permission::create(['name' => 'update-big-query']);
-        Permission::create(['name' => 'delete-big-query']);
+        Permission::create(['name' => 'user.view']);
+        Permission::create(['name' => 'user.create']);
+        Permission::create(['name' => 'user.update']);
+        Permission::create(['name' => 'user.delete']);
 
-        Permission::create(['name' => 'access-dashboard']);
-        Permission::create(['name' => 'edit-any']);
+        $access = Permission::create(['name' => 'dashboard.access']);
 
-        $role = Role::create([
-            'id' => Uuid::generate(4),
+        Role::create([
             'name' => 'super-admin',
         ]);
 
-        $role->givePermissionTo(Permission::all());
+        $author = Role::create([
+            'name' => 'author'
+        ]);
 
-        $user = \App\User::where('email', 'admin@gmail.com')->first();
+        $lecturer = Role::create([
+            'name' => 'lecturer'
+        ]);
 
-        $user->assignRole('super-admin');
+        $showcase = Permission::query()->where([
+            ['name', 'like', '%showcase.%'],
+        ])->get();
 
-        $user->givePermissionTo('access-dashboard');
+        foreach ($showcase as $key => $permission) {
+            $lecturer->givePermissionTo($permission->name);
+        }
+
+        $blog = Permission::query()->where([
+            ['name', 'like', '%blog.%'],
+        ])->get();
+
+        foreach ($blog as $key => $permission) {
+            $lecturer->givePermissionTo($permission->name);
+
+            $author->givePermissionTo($permission->name);
+        }
+
+        $roles = Role::query()->where([
+            ['name', '!=', 'super-admin']
+        ])->get();
+
+        foreach ($roles as $key => $role) {
+            $role->givePermissionTo($access);
+        }
     }
 }
